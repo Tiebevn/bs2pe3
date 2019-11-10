@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_USER=pdb
+      - MYSQL_PASSWORD=pdbpass
+      - MYSQL_DATABASE=pdb
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+
+  backend:
+    image: javatest
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_USER=pdb
+      - MYSQL_PASSWORD=pdbpass
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    restart: on-failure
