@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.3"
 
 services:
   db:
@@ -10,13 +10,21 @@ services:
       - MYSQL_RANDOM_ROOT_PASSWORD=true
 
   backend:
-    image: javatest
+    image: catalogapp_backend
     environment:
       - MYSQL_HOST=db
       - MYSQL_USER=pdb
       - MYSQL_PASSWORD=pdbpass
     ports:
-      - 8080:8080
+      - 8000:8080
     depends_on:
       - db
+    restart: on-failure
+ 
+  frontend:
+    image: coscicorp/catalog_frontend
+    ports:
+      - 80:3000
+    depends_on:
+      - backend
     restart: on-failure
